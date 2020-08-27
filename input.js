@@ -1,4 +1,5 @@
 let connection;
+let buffer = [];
 const handleUserInput = (data) => {
   if (data === '\u0003') {
     process.exit();
@@ -15,6 +16,10 @@ const handleUserInput = (data) => {
   if (data === 'd') {
     connection.write("Move: right")
   }
+  buffer.push(data);
+  if(buffer.length > 5) buffer.length = 0;
+  console.log(buffer);
+  connection.write(`Say: ${buffer.join('')}`);
 }
 const setupInput = function (conn) {
   connection = conn;
